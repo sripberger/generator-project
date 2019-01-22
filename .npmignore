@@ -1,0 +1,3 @@
+# Only ignore top level .eslintrc files.
+# The ones in templates need to be published.
+/.eslintrc.*

@@ -1,0 +1,3 @@
+extends: '@sripberger'
+rules:
+    no-sync: off # Sync methods are ok here, it's just a generator.

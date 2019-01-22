@@ -1,0 +1,14 @@
+{
+  "name": "<%= name %>",
+  "version": "0.0.0",
+  "description": "<%= description %>",
+  "author": "<%= author %>",
+  "license": "<%= license %>",
+  "repository": "<%= repository %>",
+  "scripts": {
+    "lint": "eslint .",
+    "unit": "mocha -r esm test/setup.js test/unit",
+    "integration": "mocha -r esm test/setup.js test/integration",
+    "test": "npm run unit && npm run integration"
+  }
+}
