@@ -1,6 +1,6 @@
 {
   "name": "@sripberger/generator-project",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Personal Project Scaffold Generator",
   "keywords": [
     "yeoman-generator"
