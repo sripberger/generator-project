@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const scripts = require('./scripts');
 const Subgenerator = require('../../base-classes/subgenerator');
 
 /**
@@ -20,10 +21,13 @@ class ApplicationGenerator extends Subgenerator {
 
 		// First, generate the base scaffold.
 		const baseOptions = _.assign(_.omit(this.options, 'command'), {
-			// Include the bin property in package.json.
-			packageProperties: { bin: {
-				[this.options.command]: `./bin/${commandFilename}`,
-			} },
+			// Include the bin property and additional scripts in package.json.
+			packageProperties: {
+				bin: {
+					[this.options.command]: `./bin/${commandFilename}`,
+				},
+				scripts,
+			},
 		});
 		this.composeWith(require.resolve('../base'), baseOptions);
 

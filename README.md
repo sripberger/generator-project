@@ -143,7 +143,7 @@ npm run unit
 # To run integration tests:
 npm run integration
 
-# To run all tests:
+# To run linter, followed by unit and integration tests:
 npm run test
 ```
 
@@ -161,3 +161,58 @@ need to import it yourself.
 Finally, `chai` is extended using
 [`sinon-chai`](https://github.com/domenic/sinon-chai), allowing you to easily
 write assertions about the fake functions and methods you create with `sinon`.
+
+
+## Documentation
+Doc comments should be written using [JSDoc](http://usejsdoc.org/) syntax. Some,
+but not all of this syntax will be checked by the linter using
+[eslint-plugin-jsdoc](https://www.npmjs.com/package/eslint-plugin-jsdoc).
+
+### Generating Public Docs
+In library projects only, public documentation can be generated from these
+comments using [documentation.js](https://documentation.js.org/), which allows
+you to omit some info from your doc comments and infers them from your code--
+things like method names, instance or static membership, and so on.
+
+To generate docs (again, only in library projects), run the following script:
+
+```sh
+npm run docs
+```
+
+Docs will be output as html in the `docs` folder, allowing you to view them in
+the browser of your choice. This folder is ignored by git, but *not* ignored by
+npm, so as long as you make sure the docs are rebuilt for each, every published
+package version will also include its own version of your docs.
+
+### Configuring Public Docs
+`docs.yaml` at the root of a library project generator allows you to configure
+the public docs output-- including specifying a table of contents-- as described
+[here](https://github.com/documentationjs/documentation/blob/master/docs/CONFIG.md).
+By default, though, this file does nothing and simply shows your documented
+entities in the order encountered by the parser.
+
+### Publishing Docs
+Library projects also have a `gh-pages` dependency, which will be used to
+deploy your generated docs to the `gh-pages` branch of your repository, allowing
+them to be viewed publicly. Since you should generally only do this when
+actually publishing a new release, there is no exposed npm script for doing
+this. Instead, it will be handled automatically by the `postversion` script,
+described below.
+
+
+## The `postversion` Script
+Before you publish a new version of your package, there's a number of steps
+you're always going to want to do:
+
+1. Run [npm version](https://docs.npmjs.com/cli/version.html) to bump the
+   version number.
+2. Generate public docs (for library projects only).
+3. Publish public docs (for library projects only).
+4. Push the new commit from `npm version`.
+5. Push the new tag from `npm version`.
+
+To make things easier, both project types include a `postversion` script that
+will automatically run after each `npm version` run. It will perform all of the
+applicable steps between 2 and 5. Once it is finished, all that's left to do is
+to run `npm publish` to publish your package to the registry of your choice.

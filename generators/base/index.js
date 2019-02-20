@@ -14,6 +14,14 @@ class BaseGenerator extends Subgenerator {
 			type: Object,
 			default: {},
 		});
+
+
+		this.option('appends', {
+			description: 'Strings to append to template files, ' +
+				'keyed by template path',
+			type: Object,
+			default: {},
+		});
 	}
 
 	generateScaffold() {
@@ -32,6 +40,20 @@ class BaseGenerator extends Subgenerator {
 			{ globOptions: { dot: true } } // Include .eslintrc files.
 		);
 
+		// Add additional specified properties to package.json.
+		this.fs.extendJSON(
+			this.destinationPath('package.json'),
+			this.options.packageProperties
+		);
+
+		// Append specified strings to template files
+		for (const file in this.options.appends) {
+			this.fs.append(
+				this.destinationPath(file),
+				this.options.appends[file]
+			);
+		}
+
 		// Prepend dot to the npmignore file name.
 		this.fs.move(
 			this.destinationPath('npmignore'),
@@ -44,10 +66,10 @@ class BaseGenerator extends Subgenerator {
 			this.destinationPath('.gitignore')
 		);
 
-		// Add additional specified properties to package.json.
-		this.fs.extendJSON(
-			this.destinationPath('package.json'),
-			this.options.packageProperties
+		// Prepend dot to the eslintignore file name.
+		this.fs.move(
+			this.destinationPath('eslintignore'),
+			this.destinationPath('.eslintignore')
 		);
 
 		// Install all dependencies and dev dependencies.
