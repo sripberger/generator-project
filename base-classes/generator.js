@@ -3,6 +3,7 @@ const path = require('path');
 
 /**
  * Base class for all generators and subgenerators in this project.
+ * Adds some utility methods for getting default values.
  */
 class Generator extends YeomanGenerator {
 	/**

@@ -1,20 +1,10 @@
-const Subgenerator = require('../../base-classes/subgenerator');
+const AppSubgenerator = require('../../base-classes/app-subgenerator');
 const scripts = require('./scripts');
 
 /**
  * Subgenerator for elements unique to application projects.
  */
-class ApplicationGenerator extends Subgenerator {
-	constructor(args, opts) {
-		super(args, opts);
-
-		this.option('command', {
-			description: 'Application command',
-			type: String,
-			default: this.options.name,
-		});
-	}
-
+class ApplicationGenerator extends AppSubgenerator {
 	generateScaffold() {
 		const commandFilename = `${this.options.command}.js`;
 

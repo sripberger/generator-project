@@ -2,6 +2,7 @@ const Generator = require('./generator');
 
 /**
  * Base class for all subgenerators in this project.
+ * Adds the `name`, `description`, `author`, and `license` options.
  */
 class Subgenerator extends Generator {
 	constructor(args, opts) {
