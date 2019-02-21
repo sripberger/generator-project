@@ -29,7 +29,7 @@ class ApplicationGenerator extends Subgenerator {
 				scripts,
 			},
 		});
-		this.composeWith(require.resolve('../base'), baseOptions);
+		this.composeWith(require.resolve('../../internal/base'), baseOptions);
 
 		// Copy the application bin file.
 		this.fs.copyTpl(

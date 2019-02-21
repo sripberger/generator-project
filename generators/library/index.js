@@ -20,7 +20,7 @@ class LibraryGenerator extends Subgenerator {
 				npmignore: 'docs.yaml\n',
 			},
 		});
-		this.composeWith(require.resolve('../base'), baseOptions);
+		this.composeWith(require.resolve('../../internal/base'), baseOptions);
 
 		// Copy the CommonJS compatibility wrapper.
 		this.fs.copyTpl(
