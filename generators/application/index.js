@@ -1,11 +1,11 @@
-const _ = require('lodash');
-const scripts = require('./scripts');
 const Subgenerator = require('../../base-classes/subgenerator');
+const basePath = require.resolve('../../internal/base');
+const applicationPath = require.resolve('../../internal/application');
 
 /**
  * Subgenerator for packages with an executable node program.
  */
-class ApplicationGenerator extends Subgenerator {
+class ApplicationProjectGenerator extends Subgenerator {
 	constructor(args, opts) {
 		super(args, opts);
 
@@ -17,39 +17,12 @@ class ApplicationGenerator extends Subgenerator {
 	}
 
 	generateScaffold() {
-		const commandFilename = `${this.options.command}.js`;
-
 		// First, generate the base scaffold.
-		const baseOptions = _.assign(_.omit(this.options, 'command'), {
-			// Include the bin property and additional scripts in package.json.
-			packageProperties: {
-				bin: {
-					[this.options.command]: `./bin/${commandFilename}`,
-				},
-				scripts,
-			},
-		});
-		this.composeWith(require.resolve('../../internal/base'), baseOptions);
+		this.composeWith(basePath, this.options);
 
-		// Copy the application bin file.
-		this.fs.copyTpl(
-			this.templatePath('bin.js'),
-			this.destinationPath('bin', commandFilename),
-			{ applicationName: this.options.command }
-		);
-
-		// Copy the application src file.
-		this.fs.copyTpl(
-			this.templatePath('src.js'),
-			this.destinationPath('src', commandFilename)
-		);
-
-		// Copy the application internal lib index.
-		this.fs.copyTpl(
-			this.templatePath('lib.js'),
-			this.destinationPath('lib', 'index.js')
-		);
+		// Next, generate the remaining application scaffold.
+		this.composeWith(applicationPath, this.options);
 	}
 }
 
-module.exports = ApplicationGenerator;
+module.exports = ApplicationProjectGenerator;
