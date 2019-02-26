@@ -14,8 +14,8 @@ exports.dependencies = [
 exports.devDependencies = [
 	'chai@4',
 	'eslint@5',
-	'eslint-plugin-jsdoc@3',
-	'mocha@5',
+	'eslint-plugin-jsdoc@4',
+	'mocha@6',
 	'sinon@7',
 	'sinon-chai@3',
 	'@sripberger/eslint-config@1',
